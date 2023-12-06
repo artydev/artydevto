@@ -15,6 +15,6 @@ const App = () =>
         target
     );
 
-svc.get_all_posts();
+svc.getArticles()
 
 export { App }
