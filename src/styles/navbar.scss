@@ -1,5 +1,13 @@
 .navbar {
     background-color: white;
     height: 50px;
-    background-color: tan;
+    line-height: 50px;
+    background-color: white;
+    gap: 0rem;
+
+    & .logo {
+        font-weight: bold;
+    }
 }
+
+

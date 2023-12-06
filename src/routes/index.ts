@@ -1,7 +1,7 @@
 
-import { homePage } from "../components/home"
-import { userPage} from '../components/user';
-import { aboutPage } from "../components/about";
+import { homePage } from "../pages/home"
+import { userPage} from '../pages/user';
+import { aboutPage } from "../pages/about";
 
 const routes = [
     { path: '/', name: 'home', callable: async () => homePage },
