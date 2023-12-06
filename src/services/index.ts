@@ -1,4 +1,52 @@
-import { DEVArticle, GetArticlesOptions} from "../models/articles"
+import { DEVArticle, GetArticlesOptions} from "../models/articles";
+import { marked } from "marked";
+
+const markdownToHTML = (markdown: string): string | Promise<string> => {
+    const regex = new RegExp(/^.*{%\s?(.+?) (.+?)\s?%}.*(?:\n|$)/);
+    const getEmbedUrl = (embedType: string, input: string): string => {
+      switch (embedType) {
+        case 'youtube':
+          return `https://www.youtube.com/embed/${input}`;
+        case 'codepen':
+          return input.replace(/\/pen\//, '/embed/');
+        case 'codesandbox':
+          return `https://codesandbox.io/embed/${input}`;
+        default:
+          // etc...
+          return '';
+      }
+    };
+    const embedExtension = {
+      name: 'embedExtension',
+      level: 'block',
+      start(src) {
+        return src.match(/^.*{%/)?.index;
+      },
+      tokenizer(src) {
+        const match = regex.exec(src);
+  
+        console.log('tokenizer', src, match);
+        if (match) {
+          return {
+            type: 'embedExtension',
+            raw: match[0],
+            embedType: match[1].trim(),
+            input: match[2].trim(),
+            tokens: [],
+          };
+        }
+      },
+      renderer(token) {
+        return `<iframe src="${getEmbedUrl(
+          token.embedType,
+          token.input
+        )}"></iframe>`;
+      },
+    };
+    marked.use({ gfm: true, extensions: [embedExtension] });
+  
+    return marked.parse(markdown);
+  };
 
 const getArticles = async (options?: GetArticlesOptions)
 : Promise<DEVArticle[]> => {
@@ -20,7 +68,7 @@ const getArticles = async (options?: GetArticlesOptions)
                 },
             }
         );
-        
+
         const json = await response.json();
 
         articles.push(...json);
@@ -29,4 +77,4 @@ const getArticles = async (options?: GetArticlesOptions)
     return articles;
 };
 
-export { getArticles }
+export { getArticles, markdownToHTML }
