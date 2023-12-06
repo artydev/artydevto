@@ -1,12 +1,12 @@
 import van from 'vanjs-core';
 
-const { div, span } = van.tags;
+const { div, span} = van.tags;
 
-const NavBar = (nav_link) => div(
+const NavBar = (nav_link) =>  div(
     { class: "navbar" },
     div(
-
-        span({ class: "logo" }, "LOGO"),
+      
+        span({class:"logo"}, "LOGO"),
         nav_link({ name: 'home' }, 'Home'),
         span(' | '),
         nav_link({ name: 'user', params: { userId: 123 } }, 'User'),

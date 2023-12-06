@@ -41,38 +41,6 @@ interface GetArticlesOptions {
     pages?: number;
     perPage?: number;
 }
-const getArticles = async (options?: GetArticlesOptions)
-: Promise<DEVArticle[]> => {
-
-    const articles: DEVArticle[] = [];
-    const pages = options?.pages || 1;
-    const perPage = options?.perPage || 30;
-
-    for (let page = 1; page <= pages; page += 1) {
-        const response = await fetch(
-            `https://dev.to/api/articles/me?per_page=${perPage}&page=${page}`,
-            {
-                method: 'GET',
-                headers: {
-                    'api-key': 'your-api-key',
-                    accept: 'application/vnd.forem.api-v1+json',
-                    'content-type': 'application/json',
-                },
-            }
-        );
-        const json = await response.json();
-
-        articles.push(...json);
-    }
-
-    return articles;
-};
-
-/*
-getArticles({ pages: 3, perPage: 100 }).then((result) => {
-    console.log(result);
-});
-*/
 
 export { DEVArticle, GetArticlesOptions }
 

@@ -4,7 +4,7 @@ import { userPage} from '../pages/user';
 import { aboutPage } from "../pages/about";
 
 const routes = [
-    { path: '/', name: 'home', callable: async () => homePage },
+    { path: '/', name: 'home', callable: async () =>  { return homePage } },
     { path: '/user/:userId', name: 'user', callable: async () => userPage },
     { path: '/about', name: 'about', callable: async () => aboutPage }
 ];

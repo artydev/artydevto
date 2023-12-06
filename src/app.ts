@@ -1,20 +1,16 @@
 import createCone from 'van-cone';
 import van from 'vanjs-core';
 import { routes } from './routes';
-import * as svc from "./services";
 import { NavBar } from './components';
 
 const { div } = van.tags;
-
 const target = div({ id: 'layout' })
-const { navLink } = createCone(target, routes)
+const R = createCone(target, routes)
 
 const App = () =>
     div(
-        NavBar(navLink),
+        NavBar(R.navLink),
         target
     );
-
-svc.getArticles()
-
-export { App }
+    
+export { App } 
